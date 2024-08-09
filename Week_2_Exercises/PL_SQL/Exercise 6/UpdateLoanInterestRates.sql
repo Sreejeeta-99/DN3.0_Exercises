@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 DECLARE
     CURSOR c_loans IS
         SELECT LoanID, InterestRate
@@ -19,3 +20,26 @@ BEGIN
     COMMIT;
 END;
 /
+=======
+DECLARE
+    CURSOR c_loans IS
+        SELECT LoanID, InterestRate
+        FROM Loans;
+    
+    v_loan_id Loans.LoanID%TYPE;
+    v_interest_rate Loans.InterestRate%TYPE;
+BEGIN
+    OPEN c_loans;
+    LOOP
+        FETCH c_loans INTO v_loan_id, v_interest_rate;
+        EXIT WHEN c_loans%NOTFOUND;
+
+        UPDATE Loans
+        SET InterestRate = InterestRate + 0.5 -- Example adjustment
+        WHERE LoanID = v_loan_id;
+    END LOOP;
+    CLOSE c_loans;
+    COMMIT;
+END;
+/
+>>>>>>> ded4dd6b13d832fcf35f0bc2b47fac54d2f0c41c

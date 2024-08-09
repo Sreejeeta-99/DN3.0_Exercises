@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 DECLARE
     CURSOR c_customers IS
         SELECT CustomerID, Balance
@@ -21,3 +22,28 @@ BEGIN
     COMMIT;
 END;
 /
+=======
+DECLARE
+    CURSOR c_customers IS
+        SELECT CustomerID, Balance
+        FROM Customers;
+    
+    v_customer_id Customers.CustomerID%TYPE;
+    v_balance Customers.Balance%TYPE;
+BEGIN
+    OPEN c_customers;
+    LOOP
+        FETCH c_customers INTO v_customer_id, v_balance;
+        EXIT WHEN c_customers%NOTFOUND;
+
+        IF v_balance > 10000 THEN
+            UPDATE Customers
+            SET IsVIP = 'TRUE'
+            WHERE CustomerID = v_customer_id;
+        END IF;
+    END LOOP;
+    CLOSE c_customers;
+    COMMIT;
+END;
+/
+>>>>>>> ded4dd6b13d832fcf35f0bc2b47fac54d2f0c41c
